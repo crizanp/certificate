@@ -1,0 +1,101 @@
+/* Reset some defaults */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body with black background */
+body {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for login box */
+.login-container {
+    background-color: #1c1c1c;
+    padding: 30px 40px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+/* Header inside the login box */
+.login-header h2 {
+    margin-bottom: 5px;
+    font-size: 26px;
+}
+
+.login-header p {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ddd;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #2b2b2b;
+    color: #fff;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #777;
+    outline: none;
+}
+
+/* Login button */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Error and Success messages */
+.error-message {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
