@@ -1,6 +1,6 @@
 <?php
-require_once 'config/database.php';
-require_once 'includes/session.php';
+require_once '../config/database.php';
+require_once '../includes/session.php';
 requireLogin();
 
 $message = '';
@@ -64,91 +64,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Syllabus</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/certificate.css">
     <style>
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
+        /* Additional styling for textarea */
         .form-group textarea {
-            height: 100px;
-            resize: vertical;
-        }
-        .file-upload {
-            border: 2px dashed #ddd;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #000;
+            color: #fff;
             transition: border-color 0.3s;
+            resize: vertical;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            min-height: 100px;
         }
-        .file-upload:hover {
-            border-color: #4CAF50;
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #fff;
         }
-        .btn {
-            background: #4CAF50;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn:hover {
-            background: #45a049;
-        }
-        .btn-secondary {
-            background: #6c757d;
-            margin-left: 10px;
-        }
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-        .message {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        .success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .back-link {
-            margin-bottom: 20px;
-        }
-        .back-link a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        .back-link a:hover {
-            text-decoration: underline;
+
+        .form-group textarea::placeholder {
+            color: #666;
         }
     </style>
 </head>
@@ -161,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="dashboard-content">
             <div class="back-link">
-                <a href="dashboard.php">&larr; Back to Dashboard</a>
+                <a href="../dashboard.php">&larr; Back to Dashboard</a>
             </div>
             
             <div class="form-container">
@@ -199,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="form-group">
                         <button type="submit" class="btn">Create Syllabus</button>
-                        <a href="dashboard.php" class="btn btn-secondary">Cancel</a>
+                        <a href="../dashboard.php" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

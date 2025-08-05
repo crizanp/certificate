@@ -65,13 +65,13 @@ $admin = $stmt->fetch();
                 <div class="dashboard-card">
                     <h3>Syllabus Management</h3>
                     <ul class="feature-links">
-                        <li><a href="create-syllabus.php">Create Syllabus</a></li>
-                        <li><a href="view-syllabi.php">View Syllabi</a></li>
-                        <li><a href="manage-syllabi.php">Manage Syllabi</a></li>
+                        <li><a href="syllabus/create-syllabus.php">Create Syllabus</a></li>
+                        <li><a href="syllabus/view-syllabi.php">View Syllabi</a></li>
+                        <!-- <li><a href="syllabus/manage-syllabi.php">Manage Syllabi</a></li> -->
                     </ul>
                 </div>
 
-                <div class="dashboard-card">
+                <!-- <div class="dashboard-card">
                     <h3>User Management</h3>
                     <ul class="feature-links">
                         <li><a href="manage_users.php">Manage Users</a></li>
@@ -87,7 +87,7 @@ $admin = $stmt->fetch();
                         <li><a href="backup_restore.php">Backup & Restore</a></li>
                         <li><a href="system_logs.php">System Logs</a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

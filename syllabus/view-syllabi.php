@@ -1,6 +1,6 @@
 <?php
-require_once 'config/database.php';
-require_once 'includes/session.php';
+require_once '../config/database.php';
+require_once '../includes/session.php';
 requireLogin();
 
 // Pagination settings
@@ -63,174 +63,144 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Syllabi</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/certificate.css">
     <style>
+        /* Additional styles for syllabi grid view */
         .syllabi-container {
-            background: white;
+            background: #1a1a1a;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #333;
             overflow: hidden;
         }
-        .filter-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .filter-row {
-            display: flex;
-            gap: 15px;
-            align-items: end;
-            flex-wrap: wrap;
-        }
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        .filter-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        .filter-group input {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .btn {
-            background: #4CAF50;
-            color: white;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-        }
-        .btn:hover {
-            background: #45a049;
-        }
-        .btn-secondary {
-            background: #6c757d;
-        }
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
+
         .syllabi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 20px;
             padding: 20px;
         }
+
         .syllabus-card {
-            border: 1px solid #dee2e6;
+            border: 1px solid #333;
             border-radius: 8px;
             overflow: hidden;
-            transition: box-shadow 0.3s;
+            transition: box-shadow 0.3s, border-color 0.3s;
+            background: #000;
         }
+
         .syllabus-card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+            border-color: #555;
         }
+
         .syllabus-header {
-            background: #f8f9fa;
+            background: #111;
             padding: 15px;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid #333;
         }
+
         .syllabus-title {
             font-size: 18px;
-            font-weight: bold;
-            color: #333;
+            font-weight: normal;
+            color: #fff;
             margin-bottom: 5px;
         }
+
         .syllabus-meta {
             font-size: 12px;
             color: #666;
         }
+
         .syllabus-body {
             padding: 15px;
         }
+
         .syllabus-description {
-            color: #666;
+            color: #ccc;
             margin-bottom: 15px;
             line-height: 1.5;
+            font-size: 14px;
         }
+
         .syllabus-stats {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
             font-size: 14px;
         }
+
         .stat-item {
             text-align: center;
         }
+
         .stat-number {
             font-size: 20px;
-            font-weight: bold;
-            color: #4CAF50;
+            font-weight: normal;
+            color: #fff;
         }
+
         .stat-label {
             color: #666;
             font-size: 12px;
         }
+
         .syllabus-actions {
             display: flex;
             gap: 5px;
             justify-content: center;
+            flex-wrap: wrap;
         }
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
+
+        .btn-download { 
+            background: #333; 
+            color: #fff;
+            border: 1px solid #555;
         }
-        .btn-view { background: #17a2b8; }
-        .btn-edit { background: #ffc107; color: #212529; }
-        .btn-delete { background: #dc3545; }
-        .btn-download { background: #28a745; }
-        .btn-view:hover { background: #138496; }
-        .btn-edit:hover { background: #e0a800; }
-        .btn-delete:hover { background: #c82333; }
-        .btn-download:hover { background: #218838; }
-        .pagination {
-            padding: 20px;
-            text-align: center;
-            background: #f8f9fa;
-            border-top: 1px solid #dee2e6;
+        .btn-download:hover { 
+            background: #555; 
         }
-        .pagination a, .pagination span {
-            display: inline-block;
-            padding: 8px 12px;
-            margin: 0 2px;
-            text-decoration: none;
-            border: 1px solid #dee2e6;
-            color: #4CAF50;
-        }
-        .pagination a:hover {
-            background: #e9ecef;
-        }
-        .pagination .current {
-            background: #4CAF50;
-            color: white;
-        }
-        .back-link {
-            margin-bottom: 20px;
-        }
-        .back-link a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-        .no-records {
-            text-align: center;
-            padding: 50px;
-            color: #666;
-        }
+
         .pdf-icon {
-            color: #dc3545;
+            color: #666;
             font-size: 24px;
             margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .syllabi-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .syllabus-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .syllabus-actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .syllabus-card {
+                margin: 0 -5px;
+            }
+            
+            .syllabus-header,
+            .syllabus-body {
+                padding: 12px;
+            }
+            
+            .syllabus-stats {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -243,7 +213,7 @@ try {
         
         <div class="dashboard-content">
             <div class="back-link">
-                <a href="dashboard.php">&larr; Back to Dashboard</a>
+                <a href="../dashboard.php">&larr; Back to Dashboard</a>
             </div>
             
             <div class="syllabi-container">
@@ -258,8 +228,8 @@ try {
                             </div>
                             <div class="filter-group">
                                 <button type="submit" class="btn">Search</button>
-                                <a href="view_syllabi.php" class="btn btn-secondary">Clear</a>
-                                <a href="create_syllabus.php" class="btn">Add New Syllabus</a>
+                                <a href="view-syllabi.php" class="btn btn-secondary">Clear</a>
+                                <a href="create-syllabus.php" class="btn">Add New Syllabus</a>
                             </div>
                         </div>
                     </form>
@@ -269,7 +239,7 @@ try {
                     <div class="no-records">
                         <h3>No syllabi found</h3>
                         <p>No syllabi match your search criteria.</p>
-                        <a href="create_syllabus.php" class="btn">Create New Syllabus</a>
+                        <a href="create-syllabus.php" class="btn">Create New Syllabus</a>
                     </div>
                 <?php else: ?>
                     <div class="syllabi-grid">
@@ -286,7 +256,7 @@ try {
                                 </div>
                                 
                                 <div class="syllabus-body">
-                                    <div class="pdf-icon" style="text-align: center;">📄</div>
+                                    <div class="pdf-icon">📄</div>
                                     
                                     <?php if ($syllabus['description']): ?>
                                         <div class="syllabus-description">

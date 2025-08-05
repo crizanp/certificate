@@ -98,7 +98,8 @@ body {
 }
 
 .form-group input, 
-.form-group select {
+.form-group select,
+.form-group textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #333;
@@ -110,13 +111,22 @@ body {
 }
 
 .form-group input:focus, 
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: #fff;
 }
 
-.form-group input::placeholder {
+.form-group input::placeholder,
+.form-group textarea::placeholder {
     color: #666;
+}
+
+/* Textarea specific styling */
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
 }
 
 /* File upload */
