@@ -58,7 +58,7 @@ $admin = $stmt->fetch();
                     <ul class="feature-links">
                         <li><a href="certificate/create-certificate.php">Create Certificate</a></li>
                         <li><a href="certificate/view-certificate.php">View Certificates</a></li>
-                        <li><a href="certificate/manage-certificates.php">Manage Certificates</a></li>
+                        <li><a href="certificate/bulk_certificate_actions.php">Manage Certificates</a></li>
                     </ul>
                 </div>
 

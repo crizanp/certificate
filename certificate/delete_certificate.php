@@ -9,7 +9,7 @@ $certificate = null;
 
 // Get certificate ID from URL
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header('Location: view-certificates.php');
+    header('Location: view-certificate.php');
     exit();
 }
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_delete']) && $
         $pdo->commit();
         
         // Redirect with success message
-        header('Location: view-certificates.php?deleted=1');
+        header('Location: view-certificate.php?deleted=1');
         exit();
         
     } catch (PDOException $e) {
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_delete']) && $
 
 // Handle cancellation
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
-    header('Location: view-certificates.php');
+    header('Location: view-certificate.php');
     exit();
 }
 ?>
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cancel'])) {
         
         <div class="dashboard-content">
             <div class="back-link">
-                <a href="view-certificates.php">&larr; Back to Certificates</a>
+                <a href="view-certificate.php">&larr; Back to Certificates</a>
                 <?php if ($certificate): ?>
                     | <a href="view_certificate_detail.php?id=<?php echo $certificate_id; ?>">View Details</a>
                 <?php endif; ?>

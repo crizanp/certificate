@@ -33,8 +33,10 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     <title>Certificate Details</title>
     <link rel="stylesheet" href="../css/certificate.css">
     <style>
+        
         .certificate-detail {
             max-width: 800px;
+            color: #000;
             margin: 0 auto;
             background: white;
             padding: 30px;
@@ -100,18 +102,31 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
         .btn-primary {
             background-color: #007bff;
             color: white;
+
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
         .btn-warning {
             background-color: #ffc107;
             color: #212529;
         }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
         .btn-danger {
             background-color: #dc3545;
             color: white;
         }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
         .btn-secondary {
             background-color: #6c757d;
             color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
         }
         .btn:hover {
             opacity: 0.9;
@@ -136,7 +151,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
         <div class="dashboard-content">
             <div class="back-link">
                 <a href="./view-certificate.php">&larr; Back to Certificates</a> |
-                <a href="../bulk_certificate_actions.php">Bulk Actions</a>
+                <a href="./bulk_certificate_actions.php">Bulk Actions</a>
             </div>
             
             <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
@@ -240,7 +255,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
                            onclick="return confirm('Are you sure you want to delete this certificate? This action cannot be undone.')">
                             Delete Certificate
                         </a>
-                        <a href="view-certificates.php" class="btn btn-secondary">
+                        <a href="view-certificate.php" class="btn btn-secondary">
                             Back to List
                         </a>
                     </div>

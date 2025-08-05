@@ -89,7 +89,7 @@ try {
                             </div>
                             <div class="filter-group">
                                 <button type="submit" class="btn">Filter</button>
-                                <a href="view-certificates.php" class="btn btn-secondary">Clear</a>
+                                <a href="view-certificate.php" class="btn btn-secondary">Clear</a>
                             </div>
                         </div>
                     </form>

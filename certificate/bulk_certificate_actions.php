@@ -178,16 +178,28 @@ try {
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
+            color: #000;
+        }
+        .bulk-actions-form select {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #000;
         }
         .select-all-container {
             margin-bottom: 15px;
+            color: #000;
         }
         .select-all-container label {
             font-weight: bold;
             cursor: pointer;
+                        color: #000;
+
         }
         .certificate-checkbox {
             margin-right: 10px;
+            color: #000;
         }
         .selected-count {
             background: #007bff;
@@ -228,10 +240,12 @@ try {
         }
         .btn-bulk:hover {
             opacity: 0.9;
+            color: #000;
         }
         .btn-bulk:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            pointer-events: none;
         }
         .certificates-table {
             margin-top: 20px;
@@ -275,7 +289,7 @@ try {
         <div class="dashboard-content">
             <div class="back-link">
                 <a href="../dashboard.php">&larr; Back to Dashboard</a> |
-                <a href="view-certificates.php">View Certificates</a>
+                <a href="view-certificate.php">View Certificates</a>
             </div>
             
             <?php if ($message): ?>
