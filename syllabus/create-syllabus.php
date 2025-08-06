@@ -1,6 +1,23 @@
 <?php
 require_once '../config/database.php';
 require_once '../includes/session.php';
+
+// Ensure required tables exist
+try {
+    // Create syllabi table if it doesn't exist
+    $pdo->exec("CREATE TABLE IF NOT EXISTS syllabi (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        syllabus_name VARCHAR(255) NOT NULL,
+        syllabus_pdf VARCHAR(500) NOT NULL,
+        description TEXT,
+        created_by INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )");
+} catch (PDOException $e) {
+    // Continue silently if tables already exist
+}
+
 requireLogin();
 
 $message = '';

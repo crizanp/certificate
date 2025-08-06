@@ -1,8 +1,22 @@
 <?php
 require_once 'config/database.php';
 
-// Generate password hash for 'admin123'
-$password = 'admin123';
+// Ensure admin_users table exists
+try {
+    $pdo->exec("CREATE TABLE IF NOT EXISTS admin_users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(50) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        email VARCHAR(100),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+} catch (PDOException $e) {
+    echo "<p style='color: red;'>Error creating table: " . $e->getMessage() . "</p>";
+    exit;
+}
+
+// Generate password hash for 'admin025#'
+$password = 'admin025#';
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 echo "<h2>Password Hash Generator</h2>";
@@ -21,14 +35,14 @@ try {
     echo "<p style='color: green;'><strong>Success!</strong> Admin user created/updated successfully.</p>";
     echo "<p><strong>Login Credentials:</strong></p>";
     echo "<p>Username: admin</p>";
-    echo "<p>Password: admin123</p>";
+    echo "<p>Password: admin025#</p>";
     
     // Verify the password works
     $stmt = $pdo->prepare("SELECT username, password FROM admin_users WHERE username = ?");
     $stmt->execute(['admin']);
     $user = $stmt->fetch();
     
-    if ($user && password_verify('admin123', $user['password'])) {
+    if ($user && password_verify('admin025#', $user['password'])) {
         echo "<p style='color: green;'>✅ Password verification successful!</p>";
     } else {
         echo "<p style='color: red;'>❌ Password verification failed!</p>";

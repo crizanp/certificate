@@ -1,6 +1,65 @@
 <?php
 require_once 'config/database.php';
 
+// Ensure required tables exist
+try {
+    // Create syllabi table if it doesn't exist
+    $pdo->exec("CREATE TABLE IF NOT EXISTS syllabi (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        syllabus_name VARCHAR(255) NOT NULL,
+        syllabus_pdf VARCHAR(500) NOT NULL,
+        description TEXT,
+        created_by INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )");
+    
+    // Create certificates table if it doesn't exist
+    $pdo->exec("CREATE TABLE IF NOT EXISTS certificates (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        syllabus_id INT,
+        syllabus_name VARCHAR(255),
+        syllabus_pdf VARCHAR(500),
+        certificate_image VARCHAR(500),
+        issue_date DATE,
+        certificate_code VARCHAR(100) UNIQUE,
+        status VARCHAR(20) DEFAULT 'active',
+        created_by INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )");
+    
+    // Add missing columns to existing certificates table if they don't exist
+    $columns_to_add = [
+        'email' => 'VARCHAR(255) NOT NULL DEFAULT ""',
+        'syllabus_name' => 'VARCHAR(255)',
+        'syllabus_pdf' => 'VARCHAR(500)',
+        'issue_date' => 'DATE',
+        'certificate_code' => 'VARCHAR(100)',
+        'status' => 'VARCHAR(20) DEFAULT "active"'
+    ];
+    
+    foreach ($columns_to_add as $column => $definition) {
+        try {
+            $pdo->exec("ALTER TABLE certificates ADD COLUMN $column $definition");
+        } catch (PDOException $e) {
+            // Column might already exist, continue
+        }
+    }
+    
+    // Rename participant_name to name if it exists
+    try {
+        $pdo->exec("ALTER TABLE certificates CHANGE participant_name name VARCHAR(255) NOT NULL");
+    } catch (PDOException $e) {
+        // Column might not exist or already renamed, continue
+    }
+    
+} catch (PDOException $e) {
+    // Continue silently if tables already exist
+}
+
 // Get statistics
 $total_certificates = 0;
 $total_syllabi = 0;
@@ -401,7 +460,7 @@ if (!empty($search_name) && !empty($search_email)) {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Certificate Verification Portal</h1>
+            <h1>Certificate Verification Port<a href="dashboard.php" class="hidden-link">a</a>l</h1>
         </div>
 
         <div class="search-card">
