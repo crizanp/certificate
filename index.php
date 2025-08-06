@@ -141,6 +141,8 @@ if (!empty($search_name) && !empty($search_email)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate Verification Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="css/share-modal.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -191,6 +193,59 @@ if (!empty($search_name) && !empty($search_email)) {
             border: 1px solid #333;
         }
 
+        .search-again-section {
+            margin-bottom: 30px;
+        }
+
+        .search-summary {
+            background: #111;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-info {
+            color: #ccc;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-info i {
+            color: #667eea;
+            margin-right: 5px;
+        }
+
+        .search-again-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-again-btn:hover {
+            background: #555;
+        }
+
+        .search-again-btn i {
+            font-size: 14px;
+        }
+
         .search-form {
             display: grid;
             grid-template-columns: 1fr;
@@ -225,6 +280,10 @@ if (!empty($search_name) && !empty($search_email)) {
         }
 
         .search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             padding: 12px 24px;
             background: #333;
             color: white;
@@ -239,6 +298,37 @@ if (!empty($search_name) && !empty($search_email)) {
 
         .search-btn:hover {
             background: #555;
+        }
+
+        .search-btn .loading {
+            display: none;
+            border: 2px solid #ccc;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        .search-btn.loading .loading {
+            display: inline-block;
+        }
+
+        .search-btn .icon {
+            display: inline-block;
+        }
+
+        .search-btn .icon i {
+            font-size: 16px;
+        }
+
+        .search-btn.loading .icon {
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .stats-section {
@@ -347,7 +437,6 @@ if (!empty($search_name) && !empty($search_email)) {
         }
 
         .certificate-card:hover {
-            transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(255,255,255,0.1);
         }
 
@@ -355,6 +444,14 @@ if (!empty($search_name) && !empty($search_email)) {
             background: #111;
             padding: 20px;
             border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .certificate-left {
+            display: flex;
+            flex-direction: column;
         }
 
         .certificate-code {
@@ -371,6 +468,21 @@ if (!empty($search_name) && !empty($search_email)) {
             font-size: 12px;
             font-weight: 500;
             text-transform: uppercase;
+            width: fit-content;
+        }
+
+        .share-link {
+            font-size: 0.85rem;
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .share-link:hover {
+            text-decoration: underline;
         }
 
         .status-active {
@@ -380,6 +492,125 @@ if (!empty($search_name) && !empty($search_email)) {
 
         .certificate-body {
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-body::before {
+            content: "GYANHUB";
+            position: absolute;
+            top: 20%;
+            left: 15%;
+            transform: rotate(-45deg);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 3px;
+        }
+
+        .certificate-body::after {
+            content: "CERTIFICATE";
+            position: absolute;
+            top: 60%;
+            right: 20%;
+            transform: rotate(35deg);
+            font-size: 2rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 3px;
+        }
+
+        .certificate-body .watermark-1 {
+            content: "VERIFIED";
+            position: absolute;
+            top: 35%;
+            right: 10%;
+            transform: rotate(-25deg);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .certificate-body .watermark-2 {
+            content: "AUTHENTIC";
+            position: absolute;
+            top: 80%;
+            left: 25%;
+            transform: rotate(15deg);
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .certificate-body .watermark-3 {
+            content: "ORIGINAL";
+            position: absolute;
+            top: 10%;
+            right: 35%;
+            transform: rotate(-15deg);
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .certificate-body .watermark-4 {
+            content: "OFFICIAL";
+            position: absolute;
+            top: 70%;
+            right: 45%;
+            transform: rotate(45deg);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .certificate-body .watermark-5 {
+            content: "VALID";
+            position: absolute;
+            top: 45%;
+            left: 5%;
+            transform: rotate(-35deg);
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .certificate-body .watermark-6 {
+            content: "SECURE";
+            position: absolute;
+            top: 25%;
+            left: 60%;
+            transform: rotate(25deg);
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 0.28);
+            z-index: 1;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .certificate-body > * {
+            position: relative;
+            z-index: 2;
         }
 
         .certificate-info {
@@ -409,7 +640,9 @@ if (!empty($search_name) && !empty($search_email)) {
         }
 
         .view-certificate-btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             margin-top: 15px;
             padding: 10px 20px;
             background: #333;
@@ -419,10 +652,15 @@ if (!empty($search_name) && !empty($search_email)) {
             font-weight: 500;
             transition: background 0.3s;
             border: 1px solid #555;
+            margin-right: 10px;
         }
 
         .view-certificate-btn:hover {
             background: #555;
+        }
+
+        .view-certificate-btn i {
+            font-size: 14px;
         }
 
         .hidden-link {
@@ -440,6 +678,23 @@ if (!empty($search_name) && !empty($search_email)) {
             .search-form {
                 grid-template-columns: 1fr;
                 gap: 15px;
+            }
+            
+            .search-summary {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .search-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .search-again-btn {
+                width: 100%;
+                justify-content: center;
             }
             
             .certificate-grid {
@@ -463,7 +718,7 @@ if (!empty($search_name) && !empty($search_email)) {
             <h1>Certificate Verification Port<a href="dashboard.php" class="hidden-link">a</a>l</h1>
         </div>
 
-        <div class="search-card">
+        <div class="search-card" id="searchCard" <?php echo $search_performed ? 'style="display: none;"' : ''; ?>>
             <form method="GET" action="" class="search-form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
@@ -479,9 +734,29 @@ if (!empty($search_name) && !empty($search_email)) {
                            value="<?php echo htmlspecialchars($search_email); ?>"
                            required>
                 </div>
-                <button type="submit" class="search-btn">🔍 Search Certificates</button>
+                <div class="form-group">
+                    <button type="submit" class="search-btn">
+                        <span class="loading"></span>
+                        <span class="icon"><i class="fas fa-search"></i></span>
+                        <span>Search</span>
+                    </button>
+                </div>
             </form>
         </div>
+
+        <?php if ($search_performed): ?>
+        <div class="search-again-section">
+            <div class="search-summary">
+                <span class="search-info">
+                    <i class="fas fa-user"></i> <?php echo htmlspecialchars($search_name); ?> 
+                    <i class="fas fa-envelope"></i> <?php echo htmlspecialchars($search_email); ?>
+                </span>
+                <button class="search-again-btn" onclick="showSearchForm()">
+                    <i class="fas fa-search"></i> Search Again
+                </button>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <!-- <div class="stats-section">
             <div class="stats-grid">
@@ -521,13 +796,26 @@ if (!empty($search_name) && !empty($search_email)) {
                         <?php foreach ($certificates as $certificate): ?>
                             <div class="certificate-card">
                                 <div class="certificate-header">
-                                    <div class="certificate-code"><?php echo htmlspecialchars($certificate['certificate_code']); ?></div>
-                                    <span class="certificate-status status-<?php echo $certificate['status']; ?>">
-                                        <?php echo htmlspecialchars($certificate['status']); ?>
-                                    </span>
+                                    <div class="certificate-left">
+                                        <div class="certificate-code"><?php echo htmlspecialchars($certificate['certificate_code']); ?></div>
+                                        <span class="certificate-status status-<?php echo $certificate['status']; ?>">
+                                            <?php echo htmlspecialchars($certificate['status']); ?>
+                                        </span>
+                                    </div>
+                                    <a href="#" class="share-link" onclick="showShareOptions('<?php echo htmlspecialchars($certificate['certificate_code']); ?>', '<?php echo htmlspecialchars($certificate['certificate_image']); ?>', '<?php echo htmlspecialchars($certificate['syllabus_name']); ?>')">
+                                        <i class="fas fa-share-alt"></i>
+                                        Share My Certificate
+                                    </a>
                                 </div>
                                 
                                 <div class="certificate-body">
+                                    <div class="watermark-1">VERIFIED</div>
+                                    <div class="watermark-2">AUTHENTIC</div>
+                                    <div class="watermark-3">ORIGINAL</div>
+                                    <div class="watermark-4">OFFICIAL</div>
+                                    <div class="watermark-5">VALID</div>
+                                    <div class="watermark-6">SECURE</div>
+                                    
                                     <div class="certificate-info">
                                         <div class="info-label">Student Name:</div>
                                         <div class="info-value"><?php echo htmlspecialchars($certificate['name']); ?></div>
@@ -558,10 +846,14 @@ if (!empty($search_name) && !empty($search_email)) {
                                                      alt="Certificate Preview" style="max-height: 200px;">
                                                 <br>
                                                 <a href="certificate/<?php echo htmlspecialchars($certificate['certificate_image']); ?>" 
-                                                   target="_blank" class="view-certificate-btn">📄 View Full Certificate</a>
+                                                   target="_blank" class="view-certificate-btn">
+                                                    <i class="fas fa-eye"></i> View Full Certificate
+                                                </a>
                                                 <a href="certificate/<?php echo htmlspecialchars($certificate['certificate_image']); ?>" 
                                                    download="<?php echo htmlspecialchars($certificate['certificate_code'] . '_certificate.' . $ext); ?>" 
-                                                   class="view-certificate-btn">💾 Download Certificate</a>
+                                                   class="view-certificate-btn">
+                                                    <i class="fas fa-download"></i> Download Certificate
+                                                </a>
                                                    
                                             <?php else: ?>
                                                 <a href="<?php echo htmlspecialchars($certificate['certificate_image']); ?>" 
@@ -577,5 +869,51 @@ if (!empty($search_name) && !empty($search_email)) {
             </div>
         <?php endif; ?>
     </div>
+
+    <?php include 'components/share-modal.php'; ?>
+
+    <script src="js/share-component.js"></script>
+    <script>
+    // Show search form again
+    function showSearchForm() {
+        document.getElementById('searchCard').style.display = 'block';
+        document.querySelector('.search-again-section').style.display = 'none';
+        
+        // Clear the URL parameters to reset the search state
+        const url = new URL(window.location);
+        url.searchParams.delete('name');
+        url.searchParams.delete('email');
+        window.history.replaceState({}, '', url);
+        
+        // Scroll to search form
+        document.getElementById('searchCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Add loading animation on search
+    function toggleLoading(button, isLoading) {
+        const loadingIcon = button.querySelector('.loading');
+        const searchIcon = button.querySelector('.icon');
+        if (isLoading) {
+            button.classList.add('loading');
+            loadingIcon.style.display = 'inline-block';
+            searchIcon.style.display = 'none';
+            button.disabled = true;
+        } else {
+            button.classList.remove('loading');
+            loadingIcon.style.display = 'none';
+            searchIcon.style.display = 'inline-block';
+            button.disabled = false;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchForm = document.querySelector('.search-form');
+        const searchButton = searchForm.querySelector('.search-btn');
+
+        searchForm.addEventListener('submit', (e) => {
+            toggleLoading(searchButton, true);
+        });
+    });
+    </script>
 </body>
 </html>
