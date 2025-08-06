@@ -158,6 +158,23 @@ if (!empty($search_name) && !empty($search_email)) {
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+        }
+
+        body::before {
+            content: "GYANHUB";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            font-size: 20vw;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.04);
+            z-index: -1;
+            pointer-events: none;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            user-select: none;
         }
 
         .container {
@@ -171,6 +188,37 @@ if (!empty($search_name) && !empty($search_email)) {
             text-align: center;
             margin-bottom: 40px;
             color: white;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            height: 150px;
+            width: auto;
+            max-width: 400px;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: drop-shadow(0 8px 25px rgba(102, 126, 234, 0.3));
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 10px 30px rgba(102, 126, 234, 0.4));
+        }
+
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
         }
 
         .header h1 {
@@ -429,7 +477,6 @@ if (!empty($search_name) && !empty($search_email)) {
        
 
         .certificate-card {
-            border: 1px solid #333;
             border-radius: 8px;
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -663,6 +710,44 @@ if (!empty($search_name) && !empty($search_email)) {
             font-size: 14px;
         }
 
+        .attach-syllabus-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 15px;
+            padding: 8px 14px;
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e4080 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            vertical-align: middle;
+            box-shadow: 0 2px 4px rgba(44, 90, 160, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .attach-syllabus-btn:hover {
+            background: linear-gradient(135deg, #1e4080 0%, #153366 100%);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(44, 90, 160, 0.4);
+        }
+
+        .attach-syllabus-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(44, 90, 160, 0.3);
+        }
+
+        .attach-syllabus-btn i {
+            font-size: 12px;
+            transform: rotate(45deg);
+        }
+
         .hidden-link {
             color: inherit;
             text-decoration: none;
@@ -706,8 +791,43 @@ if (!empty($search_name) && !empty($search_email)) {
                 font-size: 1.6rem;
             }
             
+            .header-logo {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .logo {
+                height: 120px;
+                max-width: 300px;
+            }
+            
+            .logo-text {
+                font-size: 1.8rem;
+                letter-spacing: 1px;
+            }
+            
             .search-card {
                 padding: 20px;
+            }
+            
+            .attach-syllabus-btn {
+                margin-left: 0;
+                margin-top: 8px;
+                padding: 6px 12px;
+                font-size: 11px;
+                letter-spacing: 0.3px;
+            }
+            
+            .info-value {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            
+            .info-value .attach-syllabus-btn {
+                align-self: flex-start;
             }
         }
     </style>
@@ -715,6 +835,9 @@ if (!empty($search_name) && !empty($search_email)) {
 <body>
     <div class="container">
         <div class="header">
+            <div class="header-logo">
+                <img src="media/GyanHubLogo.png" alt="GyanHub Logo" class="logo">
+            </div>
             <h1>Certificate Verification Port<a href="dashboard.php" class="hidden-link">a</a>l</h1>
         </div>
 
@@ -828,7 +951,30 @@ if (!empty($search_name) && !empty($search_email)) {
                                     
                                     <div class="certificate-info">
                                         <div class="info-label">Course/Syllabus:</div>
-                                        <div class="info-value"><?php echo htmlspecialchars($certificate['syllabus_name']); ?></div>
+                                        <div class="info-value">
+                                            <?php echo htmlspecialchars($certificate['syllabus_name']); ?>
+                                            <?php if (!empty($certificate['syllabus_pdf'])): ?>
+                                                <?php 
+                                                // Handle different possible path formats
+                                                $syllabus_path = $certificate['syllabus_pdf'];
+                                                if (strpos($syllabus_path, 'syllabus/') !== 0 && strpos($syllabus_path, 'uploads/') === 0) {
+                                                    $syllabus_path = 'syllabus/' . $syllabus_path;
+                                                } elseif (strpos($syllabus_path, 'uploads/') !== 0 && strpos($syllabus_path, 'syllabus/') !== 0) {
+                                                    $syllabus_path = 'syllabus/uploads/syllabi/' . basename($syllabus_path);
+                                                }
+                                                
+                                                // Check if file exists before showing the attach button
+                                                if (file_exists($syllabus_path)):
+                                                ?>
+                                                <a href="<?php echo htmlspecialchars($syllabus_path); ?>" 
+                                                   target="_blank" 
+                                                   class="attach-syllabus-btn"
+                                                   title="View Syllabus PDF">
+                                                    <i class="fas fa-paperclip"></i> Attach
+                                                </a>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                     
                                     <div class="certificate-info">
