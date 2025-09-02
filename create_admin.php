@@ -15,8 +15,10 @@ try {
     exit;
 }
 
-// Generate password hash for 'admin025#'
-$password = 'admin025#';
+
+// Generate password hash for 'Gyanhub01#'
+$username = 'gyanhub';
+$password = 'Gyanhub01#';
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 echo "<h2>Password Hash Generator</h2>";
@@ -24,25 +26,25 @@ echo "<p><strong>Plain Password:</strong> " . $password . "</p>";
 echo "<p><strong>Hashed Password:</strong> " . $hashed_password . "</p>";
 
 try {
-    // Delete existing admin user
+    // Delete existing user with username 'gyanhub'
     $stmt = $pdo->prepare("DELETE FROM admin_users WHERE username = ?");
-    $stmt->execute(['admin']);
-    
+    $stmt->execute([$username]);
+
     // Insert new admin user with correct hash
     $stmt = $pdo->prepare("INSERT INTO admin_users (username, password, email) VALUES (?, ?, ?)");
-    $stmt->execute(['admin', $hashed_password, 'admin@example.com']);
-    
+    $stmt->execute([$username, $hashed_password, 'gyanhub@example.com']);
+
     echo "<p style='color: green;'><strong>Success!</strong> Admin user created/updated successfully.</p>";
     echo "<p><strong>Login Credentials:</strong></p>";
-    echo "<p>Username: admin</p>";
-    echo "<p>Password: admin025#</p>";
-    
+    echo "<p>Username: gyanhub</p>";
+    echo "<p>Password: Gyanhub01#</p>";
+
     // Verify the password works
     $stmt = $pdo->prepare("SELECT username, password FROM admin_users WHERE username = ?");
-    $stmt->execute(['admin']);
+    $stmt->execute([$username]);
     $user = $stmt->fetch();
-    
-    if ($user && password_verify('admin025#', $user['password'])) {
+
+    if ($user && password_verify($password, $user['password'])) {
         echo "<p style='color: green;'>✅ Password verification successful!</p>";
     } else {
         echo "<p style='color: red;'>❌ Password verification failed!</p>";

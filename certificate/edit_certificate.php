@@ -54,15 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $certificate) {
     } elseif (!in_array($status, ['active', 'revoked'])) {
         $error = 'Invalid status selected.';
     } else {
-        // Check if email already exists for other certificates
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM certificates WHERE email = ? AND id != ?");
-        $stmt->execute([$email, $certificate_id]);
-        $existing_count = $stmt->fetchColumn();
-        
-        if ($existing_count > 0) {
-            $error = 'Another certificate has already been issued for this email address.';
-        } else {
-            // Get syllabus info
+        // Get syllabus info
             $stmt = $pdo->prepare("SELECT syllabus_name, syllabus_pdf FROM syllabi WHERE id = ?");
             $stmt->execute([$syllabus_id]);
             $syllabus = $stmt->fetch();
@@ -143,7 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $certificate) {
             }
         }
     }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">

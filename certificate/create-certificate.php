@@ -91,14 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (!isset($_FILES['certificate_image']) || $_FILES['certificate_image']['error'] !== UPLOAD_ERR_OK) {
         $error = 'Please upload a certificate image.';
     } else {
-        // Check if email already has a certificate
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM certificates WHERE email = ?");
-        $stmt->execute([$email]);
-        $existing_count = $stmt->fetchColumn();
-        
-        if ($existing_count > 0) {
-            $error = 'A certificate has already been issued for this email address.';
-        } else {
         // Get syllabus info
         $stmt = $pdo->prepare("SELECT syllabus_name, syllabus_pdf FROM syllabi WHERE id = ?");
         $stmt->execute([$syllabus_id]);
@@ -162,7 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
-}
 }
 ?>
 <!DOCTYPE html>
